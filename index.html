@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boost</title>
+  </head>
+  <body>
+    <main>
+      <header><span class="eyebrow">BOOST / EARLY PROTOTYPE</span><h1>Use more than one connection.</h1><p>Select the network adapters to make available to the Dispatch proxy.</p></header>
+      <section aria-labelledby="adapters-title">
+        <div class="heading"><div><h2 id="adapters-title">Network adapters</h2><p>Plug in your phones and enable USB tethering first. Select only adapters you trust.</p></div><button id="refresh" type="button">Refresh</button></div>
+        <div id="adapters" aria-live="polite">Checking adapters…</div>
+      </section>
+      <section aria-labelledby="proxy-title"><h2 id="proxy-title">Local proxy</h2><p>Dispatch listens on <code>127.0.0.1:1080</code>. Other apps will <strong>not</strong> use it automatically.</p><div class="actions"><button id="start" type="button" disabled>Start proxy</button><button id="stop" type="button" disabled>Stop proxy</button></div><p id="status" role="status" aria-live="polite">Not running</p></section>
+      <aside><strong>Steam routing is not implemented yet.</strong> To test Steam today, route it to this local SOCKS5 proxy using your existing Proxifier setup. Do not interpret “proxy running” as proof Steam is using multiple phones.</aside>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

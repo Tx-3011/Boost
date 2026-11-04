@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Boost",
+  "version": "0.1.0",
+  "identifier": "dev.boost.desktop",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:5173",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [{ "title": "Boost", "width": 850, "height": 730, "resizable": true }],
+    "security": { "csp": "default-src 'self'; connect-src ipc: http://ipc.localhost; style-src 'self' 'unsafe-inline'" }
+  },
+  "bundle": { "active": false }
+}
