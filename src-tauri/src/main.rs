@@ -113,11 +113,21 @@ async fn check_connections(addresses: Vec<String>) -> Result<Vec<diagnostics::Co
     Ok(results)
 }
 
+/// Use the Dispatch copy shipped inside the installer, unless the developer
+/// pointed Boost at another build explicitly.
+fn use_bundled_dispatch(app: &tauri::App) -> Result<(), Box<dyn std::error::Error>> {
+    if std::env::var_os("BOOST_DISPATCH_PATH").is_some() { return Ok(()); }
+    let path = app.path().resolve("binaries/dispatch.exe", tauri::path::BaseDirectory::Resource)?;
+    if path.is_file() { std::env::set_var("BOOST_DISPATCH_PATH", path); }
+    Ok(())
+}
+
 fn main() {
     let proxy = ProxyState::default();
     proxy.supervise();
     tauri::Builder::default()
         .manage(proxy)
+        .setup(|app| use_bundled_dispatch(app))
         .invoke_handler(tauri::generate_handler![list_adapters, start_proxy, stop_proxy, proxy_status, adapter_traffic, check_connections, choose_application, routing_prerequisites, install_routing, start_application])
         .build(tauri::generate_context!())
         .expect("failed to build Boost")

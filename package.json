@@ -6,6 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:desktop": "vite build && node scripts/stage-dispatch.mjs",
+    "stage:dispatch": "node scripts/stage-dispatch.mjs",
+    "package": "tauri build",
     "test": "node --test src/*.test.js",
     "tauri": "tauri"
   },

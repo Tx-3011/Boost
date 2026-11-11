@@ -28,6 +28,8 @@ Select adapters to see their Windows interface receive/send rates and bytes sinc
 
 `npm run build` builds only the web frontend; `npm run tauri dev` compiles and runs the desktop application. Run `npm test` and `cargo test --manifest-path src-tauri/Cargo.toml` for the frontend and Rust tests. To compile without launching the UI or producing an installer, run `npm run tauri -- build --debug --no-bundle`; this places the executable at `src-tauri/target/debug/boost.exe`.
 
+**Build a shareable installer:** `npm run stage:dispatch` copies `dispatch.exe` into the bundle, and `npm run package` produces a per-user NSIS installer at `src-tauri/target/release/bundle/nsis/Boost_0.1.0_x64-setup.exe`. The recipient needs no Rust or Node.js. See [packaging and sharing](docs/08-packaging-and-sharing.md) for prerequisites, the code-signing caveat, and a friend-ready checklist.
+
 **Build and smoke-test verification (2026-11-04):** Rust 1.99.1, Cargo 1.99.1, Visual Studio Build Tools 2022 with MSVC/Windows SDK, and WebView2 are installed. `cargo test --manifest-path src-tauri/Cargo.toml` passes (1 test) and `npm run tauri -- build --debug --no-bundle` succeeds. The desktop window opens, lists local adapters, and starts/stops Dispatch on loopback; a SOCKS5 handshake succeeds. Duplicate start, stale address, and busy-port errors were checked; normal window exit now stops Dispatch. No USB-tethered phone was connected, so phone identification, Steam routing, and multi-adapter traffic remain untested.
 
 **Diagnostics verification (2026-11-12):** `npm test` and `cargo test --manifest-path src-tauri/Cargo.toml` pass (3 tests each). The running desktop app displayed nonzero Wi-Fi receive/send rates, the on-demand Wi-Fi check reached `1.1.1.1:443`, and an unavailable IPv4 was reported offline. No USB-tethered phone or Steam-routing trial was available for this check.
@@ -40,6 +42,7 @@ Select adapters to see their Windows interface receive/send rates and bytes sinc
 - [Experimental test plan](docs/04-validation.md)
 - [Roadmap, risks and open decisions](docs/05-roadmap.md)
 - [Selected-application routing and setup](docs/07-selected-app-routing.md)
+- [Packaging and sharing with a friend](docs/08-packaging-and-sharing.md)
 
 ## Project layout
 
