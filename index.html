@@ -7,13 +7,28 @@
   </head>
   <body>
     <main>
-      <header><span class="eyebrow">BOOST / EARLY PROTOTYPE</span><h1>Use more than one connection.</h1><p>Select the network adapters to make available to the Dispatch proxy.</p></header>
+      <header><span class="eyebrow">BOOST / EARLY PROTOTYPE</span><h1>Use more than one connection.</h1><p>Choose two connections and an application to balance its downloads.</p></header>
       <section aria-labelledby="adapters-title">
         <div class="heading"><div><h2 id="adapters-title">Network adapters</h2><p>Plug in your phones and enable USB tethering first. Select only adapters you trust.</p></div><button id="refresh" type="button">Refresh</button></div>
         <div id="adapters" aria-live="polite">Checking adapters…</div>
       </section>
-      <section aria-labelledby="proxy-title"><h2 id="proxy-title">Local proxy</h2><p>Dispatch listens on <code>127.0.0.1:1080</code>. Other apps will <strong>not</strong> use it automatically.</p><div class="actions"><button id="start" type="button" disabled>Start proxy</button><button id="stop" type="button" disabled>Stop proxy</button></div><p id="status" role="status" aria-live="polite">Not running</p></section>
-      <aside><strong>Steam routing is not implemented yet.</strong> To test Steam today, route it to this local SOCKS5 proxy using your existing Proxifier setup. Do not interpret “proxy running” as proof Steam is using multiple phones.</aside>
+      <section aria-labelledby="application-title">
+        <div class="heading"><div><h2 id="application-title">Application to boost</h2><p>Choose the app that opens the download connections.</p></div><button id="choose-application" type="button">Choose .exe</button></div>
+        <p id="selected-application">No application selected.</p>
+        <p class="hint">Matches all running instances with this executable name. Helper apps with other names are not included. Restart the download after enabling routing.</p>
+        <div class="actions"><button id="boost-application" type="button" disabled>Boost application</button><button id="stop" type="button" disabled>Stop</button></div>
+        <p id="status" role="status" aria-live="polite">Not running</p>
+        <p class="hint">Experimental IPv4 TCP routing. UDP/QUIC and DNS are not accelerated; matched IPv6 TCP connections are blocked so apps can fall back to IPv4. Standard-user mode may not capture elevated apps. Mobile data will be used.</p>
+        <details><summary>Routing component setup</summary><p id="routing-setup">Checking routing components…</p><p class="hint">First-run setup downloads ProxiFyre 2.6.4 and installs Windows Packet Filter plus a program-specific TCP firewall rule. Administrator approval is required; network connectivity may briefly pause.</p><div class="actions"><button id="install-routing" type="button">Install routing component</button><button id="refresh-setup" type="button">Check setup again</button></div></details>
+      </section>
+      <details class="manual-proxy"><summary>Advanced: local proxy only</summary><p>Starts SOCKS5 on <code>127.0.0.1:1080</code> without application redirection. Apps must be configured separately.</p><button id="start" type="button" disabled>Start proxy only</button></details>
+      <section aria-labelledby="diagnostics-title">
+        <div class="heading"><div><h2 id="diagnostics-title">Connection diagnostics</h2><p>Live Windows adapter traffic for selected addresses. Counts include other apps and the connection check; activity is not proof of Steam or Dispatch traffic.</p></div><button id="check-connections" type="button" disabled>Check connections</button></div>
+        <p class="hint">Checking contacts 1.1.1.1:443 from each selected IPv4 address (TCP only, no download). A failed check may mean this destination is blocked, not that the Internet is down. No checks run automatically.</p>
+        <p id="diagnostic-status" role="status" aria-live="polite"></p>
+        <div id="diagnostics">Select an adapter to see its traffic.</div>
+      </section>
+      <aside><strong>More connections, not a guaranteed speed multiplier.</strong> Separate TCP connections can use different links. A single connection still uses one link. Adapter counters alone do not prove which app sent the traffic.</aside>
     </main>
     <script type="module" src="/src/main.js"></script>
   </body>
